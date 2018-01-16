@@ -1,0 +1,19 @@
+.cal_container {
+  margin: 10px;
+}
+li {
+  display: inline-block;
+  padding: 1em;
+  background-color: #cacaca;
+  margin: 1px;
+}
+.today {
+  color: red;
+  font-weight: bold;
+}
+.afterToday {
+  color: blue;
+}
+.beforeToday{
+  color: green;
+}

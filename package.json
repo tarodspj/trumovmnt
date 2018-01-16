@@ -1,0 +1,28 @@
+{
+  "name": "trumovmnt",
+  "version": "1.0.0",
+  "description": "trumovmnt site",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "start": "http-server ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tarodspj/trumovmnt/tree/calendar"
+  },
+  "keywords": [
+    "html",
+    "js"
+  ],
+  "author": "roberto regueiro",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-latest": "^6.24.1"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
+  }
+}
