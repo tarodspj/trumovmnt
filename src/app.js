@@ -1,4 +1,5 @@
-import { person, sayHello, askForCalendar } from './lib';
+import { person, sayHello, askForCalendar, checkSession } from './lib';
+import { daysClass } from './classDays';
 import $ from 'jquery';
 require('datejs');
 // console.log(person.name);
@@ -23,23 +24,24 @@ let globalToday;
 const baseUrl = './js/json/meetup.json',
       attributes = '';
 
-let calendar = function calendar(manyDays, firstDay, targetHtml) {
+let calendar = function calendar(manyDays, firstDay, targetHtml, sessionsList) {
+console.log('calendar');
   let html = '',
       resultToday = 0,
       classToDay = '';
 
   const $targetHtml = $('#' + targetHtml);
 
-  function checkSession(dayToCheck) {
-    //check meetup sessions and return true or false
-    //addClass haveSession or noSession
-    //msg no session for today?!
-    //if(Date.equals(globalToday, Date.parse(dayToCheck))){
-    if (Date.equals(Date.parse('2018-01-17'), Date.parse(dayToCheck))) {
-      console.log('event today: ' + dayToCheck);
-    }
-    console.log('checkSession: ' + globalToday.toString('yy/MM/dd'));
-  }
+  // function checkSession(dayToCheck) {
+  //   //check meetup sessions and return true or false
+  //   //addClass haveSession or noSession
+  //   //msg no session for today?!
+  //   //if(Date.equals(globalToday, Date.parse(dayToCheck))){
+  //   if (Date.equals(Date.parse('2018-01-17'), Date.parse(dayToCheck))) {
+  //     console.log('event today: ' + dayToCheck);
+  //   }
+  //   console.log('checkSession: ' + globalToday.toString('yy/MM/dd'));
+  // }
 
   function drawSessionsDayCalendar(dayWithSession) {
     //recopile the sessions of the day and put where must be putted
@@ -51,7 +53,7 @@ let calendar = function calendar(manyDays, firstDay, targetHtml) {
     //check the session timetime or do it when we show the sessions of the day
   }
 
-  function manageDataCalendarHome(json) {
+  let manageTheData = function manageDataCalendarHome(json) {
     var dataCalendar = json.data;
     console.log(dataCalendar.length);
 
@@ -61,39 +63,40 @@ let calendar = function calendar(manyDays, firstDay, targetHtml) {
     });
   };
 
-  var checkToday = function checkToday(dayToCheck) {
-    var valueTocheck = Date.compare(dayToCheck, globalToday);
+function checkToday(dayToCheck) {
+    const valueTocheck = Date.compare(dayToCheck, globalToday);
     if (valueTocheck === -1) {
-      return -1;
+      return ' beforeToday ';
     } else if (valueTocheck === 0) {
-      return 0;
+      return ' today ';
     } else {
-      return 1;
+      return ' afterToday ';
     }
   };
-
+  let arrayDays = [];
   html = "<ol>";
   for (var i = 0; i < manyDays; i++) {
-    classToDay = '';
-    resultToday = checkToday(firstDay);
-    if (resultToday === 0) {
-      classToDay = classToDay + ' today';
-    } else if (resultToday === 1) {
-      classToDay = classToDay + ' afterToday';
-    } else {
-      classToDay = classToDay + ' beforeToday';
-    }
+    //const classInCalendar = checkClassInCalendar();
+    let dayToPlay = firstDay.addDays(i);
+    const classToDay = checkToday(dayToPlay);
+    const dayNumber = dayToPlay.toString('dd');
+    const weekNumber = dayToPlay.getWeek();
 
-    html += '<li class="' + classToDay + '" data-indice="' + i + '">';
+    let dayToAdd = new daysClass(dayNumber, classToDay, weekNumber, 'no se');
 
-    html += firstDay.toString('dd') + '</li>';
-    firstDay.addDays(1); //if it is at the beginning of for add one before draw
+    console.log(dayToPlay + ' ' + classToDay+ ' ' + dayNumber + ' ' + weekNumber);
+    arrayDays.push( dayToAdd );
+    //html += '<li class="' + classToDay + '" data-indice="' + i + '">';
+
+    //html += firstDay.toString('dd') + '</li>';
     if (i + 1 === manyDays) {
       html += '</ol>';
     } else if ((i + 1) % 7 == 0) {
       html += '</ol><ol>';
     }
   }
+  console.log(arrayDays);
+  $('#' + targetHtml).html(html);
 };
 
 function setInitialDateValues() {
@@ -104,18 +107,17 @@ function setInitialDateValues() {
         targetHtml = 'cal_container';
 
   globalToday = Date.today();
-console.log(firstDay);
-  let calendarHome = calendar(manyDays, firstDay, targetHtml);
-}
-
-$(function () {
-  setInitialDateValues();
-
+  //console.log(firstDay);
   askForCalendar(baseUrl).then(sessionsResponse => {
     if(sessionsResponse) {
       console.log(sessionsResponse.data);
+      let calendarHome = calendar(manyDays, firstDay, targetHtml);
     } else {
       console.log('error');
     }
   });
+}
+
+$(function () {
+  setInitialDateValues();
 });
