@@ -78,11 +78,12 @@ function checkToday(dayToCheck) {
     console.log(i);
     const classToDay = checkToday(dayToPlay);
     const dayNumber = dayToPlay.toString('dd');
+    const keyDate = dayToPlay.toString('yyyy-MM-dd'); //same structure than meetup
     const weekNumber = dayToPlay.getWeek();
 
     let dayToAdd = new daysClass(dayNumber, classToDay, weekNumber, 'no se');
 
-    listofDays.set( dayNumber, dayToAdd );
+    listofDays.set( keyDate, dayToAdd );
 
     console.log(listofDays);
     //console.log(dayToPlay + ' ' + classToDay+ ' ' + dayNumber + ' ' + weekNumber);
