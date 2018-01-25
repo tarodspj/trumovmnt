@@ -62,7 +62,7 @@ console.log('calendar');
   };
 
 function checkToday(dayToCheck) {
-    const valueTocheck = Date.compare(dayToCheck, globalToday);
+    const valueTocheck = Date.compare(dayToCheck, Date.today());
     if (valueTocheck === -1) {
       return ' beforeToday ';
     } else if (valueTocheck === 0) {
