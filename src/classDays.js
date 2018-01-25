@@ -1,11 +1,11 @@
 
 export class daysClass {
 
-    constructor (dayNumber, classInCalendar, numWeek, sessions) {
+    constructor (dayNumber, classInCalendar, weekNumber, sessions) {
         this.dayNumber = dayNumber;
         this.classInCalendar = classInCalendar;
-        this.numWeek = numWeek;
-        this.sessios = sessions;
+        this.weekNumber = weekNumber;
+        this.sessions = sessions;
     }
 
 }

@@ -14,8 +14,6 @@ require('datejs');
 
 //getPost().then(posts => console.log(posts));
 
-
-let globalToday;
 //for prod
 // const baseUrl = 'https://api.meetup.com/T-R-U-Movmnt/events',
 //       attributes = '?&sign=true&photo-host=public&page=20&fields=id,duration,local_date,local_time,name,venue&desc=false';
@@ -73,30 +71,33 @@ function checkToday(dayToCheck) {
       return ' afterToday ';
     }
   };
-  let arrayDays = [];
+  let listofDays = new Map();
   html = "<ol>";
-  for (var i = 0; i < manyDays; i++) {
-    //const classInCalendar = checkClassInCalendar();
-    let dayToPlay = firstDay.addDays(i);
+  for (let i = 0; i < manyDays; i++) {
+    let dayToPlay = firstDay.addDays(1);
+    console.log(i);
     const classToDay = checkToday(dayToPlay);
     const dayNumber = dayToPlay.toString('dd');
     const weekNumber = dayToPlay.getWeek();
 
     let dayToAdd = new daysClass(dayNumber, classToDay, weekNumber, 'no se');
 
-    console.log(dayToPlay + ' ' + classToDay+ ' ' + dayNumber + ' ' + weekNumber);
-    arrayDays.push( dayToAdd );
+    listofDays.set( dayNumber, dayToAdd );
+
+    console.log(listofDays);
+    //console.log(dayToPlay + ' ' + classToDay+ ' ' + dayNumber + ' ' + weekNumber);
+
     //html += '<li class="' + classToDay + '" data-indice="' + i + '">';
 
     //html += firstDay.toString('dd') + '</li>';
-    if (i + 1 === manyDays) {
-      html += '</ol>';
-    } else if ((i + 1) % 7 == 0) {
-      html += '</ol><ol>';
-    }
+    // if (i + 1 === manyDays) {
+    //   html += '</ol>';
+    // } else if ((i + 1) % 7 == 0) {
+    //   html += '</ol><ol>';
+    // }
   }
-  console.log(arrayDays);
-  $('#' + targetHtml).html(html);
+
+  //$('#' + targetHtml).html(html);
 };
 
 function setInitialDateValues() {
@@ -106,7 +107,6 @@ function setInitialDateValues() {
         firstDay = Date.sunday(),
         targetHtml = 'cal_container';
 
-  globalToday = Date.today();
   //console.log(firstDay);
   askForCalendar(baseUrl).then(sessionsResponse => {
     if(sessionsResponse) {
