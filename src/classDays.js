@@ -1,11 +1,15 @@
 
 export class daysClass {
 
-    constructor (dayNumber, classInCalendar, weekNumber, sessions) {
+    constructor (dayNumber, classInCalendar, weekNumber) {
         this.dayNumber = dayNumber;
         this.classInCalendar = classInCalendar;
         this.weekNumber = weekNumber;
-        this.sessions = sessions;
+        this.sessions = [];
+    }
+    addSession(newSession) {
+      this.sessions.push(newSession);
+      return true;
     }
 
 }

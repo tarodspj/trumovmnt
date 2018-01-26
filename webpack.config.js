@@ -7,6 +7,7 @@ module.exports = {
       './src/app.js'
     ]
   },
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'app.bundle.js'

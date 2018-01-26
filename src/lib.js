@@ -1,39 +1,35 @@
-export const person = {
-  name: 'rob',
-  location: 'nyc',
-  ager: 37
-}
 
-export function sayHello(name) {
-  return `Hello ${name} tu`;
-}
+export async function askForCalendar( url ) {
 
-/******************module askCalendar *********/
-
-
-export async function askForCalendar(url) {
-
-    let response = await fetch(url);
+    let response = await fetch( url) ;
     //let movie = await response.json();
     let sessions = await response.ok;
-    if (sessions) {
+    if ( sessions ) {
       return response.json();
     } else {
       return sessions;
     }
 
 }
-//***end***************module askCalendar *********/
 
-export function checkSession(dayToCheck) {
-  //check meetup sessions and return true or false
-  //addClass haveSession or noSession
-  //msg no session for today?!
-  //if(Date.equals(globalToday, Date.parse(dayToCheck))){
-  if (Date.equals(Date.parse('2018-01-17'), Date.parse(dayToCheck))) {
-    console.log('event today: ' + dayToCheck);
-    return true;
+export function checkSession( daysCalendarList, sessionsList ) {
+  sessionsList.forEach( function ( session ) {
+    let dayWithSession = daysCalendarList.get( session.local_date );
+    if( dayWithSession !== undefined ) {
+      console.log(session.local_date);
+      dayWithSession.addSession( session );
+    }
+  });
+  console.log(daysCalendarList);
+}
+
+export function checkToday( dayToCheck ) {
+  const valueTocheck = Date.compare(dayToCheck, Date.today());
+  if ( valueTocheck === -1 ) {
+    return ' beforeToday ';
+  } else if ( valueTocheck === 0 ) {
+    return ' today ';
+  } else {
+    return ' afterToday ';
   }
-  console.log('checkSession: ' + globalToday.toString('yy/MM/dd'));
-  return false;
 }

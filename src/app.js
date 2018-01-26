@@ -1,4 +1,4 @@
-import { person, sayHello, askForCalendar, checkSession } from './lib';
+import { askForCalendar, checkSession, checkToday } from './lib';
 import { daysClass } from './classDays';
 import $ from 'jquery';
 require('datejs');
@@ -22,97 +22,40 @@ require('datejs');
 const baseUrl = './js/json/meetup.json',
       attributes = '';
 
-let calendar = function calendar(manyDays, firstDay, targetHtml, sessionsList) {
-console.log('calendar');
-  let html = '',
-      resultToday = 0,
-      classToDay = '';
+let calendar = function calendar( manyDays, firstDay, targetHtml, sessionsList ) {
+  const $targetHtml = $( '#' + targetHtml );
 
-  const $targetHtml = $('#' + targetHtml);
 
-  // function checkSession(dayToCheck) {
-  //   //check meetup sessions and return true or false
-  //   //addClass haveSession or noSession
-  //   //msg no session for today?!
-  //   //if(Date.equals(globalToday, Date.parse(dayToCheck))){
-  //   if (Date.equals(Date.parse('2018-01-17'), Date.parse(dayToCheck))) {
-  //     console.log('event today: ' + dayToCheck);
-  //   }
-  //   console.log('checkSession: ' + globalToday.toString('yy/MM/dd'));
-  // }
 
-  function drawSessionsDayCalendar(dayWithSession) {
-    //recopile the sessions of the day and put where must be putted
-    // data-session1... or inside a div for each day
+  let daysCalendarList = new Map();
 
-    //if(today)
-    //add class Today
-    //addClass today
-    //check the session timetime or do it when we show the sessions of the day
-  }
-
-  let manageTheData = function manageDataCalendarHome(json) {
-    var dataCalendar = json.data;
-    console.log(dataCalendar.length);
-
-    $.each(dataCalendar, function (index, value) {
-      console.log(value.name + ' ' + value.local_date);
-      checkSession(value.local_date);
-    });
-  };
-
-function checkToday(dayToCheck) {
-    const valueTocheck = Date.compare(dayToCheck, Date.today());
-    if (valueTocheck === -1) {
-      return ' beforeToday ';
-    } else if (valueTocheck === 0) {
-      return ' today ';
-    } else {
-      return ' afterToday ';
-    }
-  };
-  let listofDays = new Map();
-  html = "<ol>";
-  for (let i = 0; i < manyDays; i++) {
-    let dayToPlay = firstDay.addDays(1);
-    console.log(i);
-    const classToDay = checkToday(dayToPlay);
-    const dayNumber = dayToPlay.toString('dd');
-    const keyDate = dayToPlay.toString('yyyy-MM-dd'); //same structure than meetup
+  for ( let i = 0; i < manyDays; i++ ) {
+    let dayToPlay = firstDay.addDays( 1 );
+    const classToDay = checkToday( dayToPlay );
+    const dayNumber = dayToPlay.toString( 'dd' );
+    const keyDate = dayToPlay.toString( 'yyyy-MM-dd' ); //same structure than meetup
     const weekNumber = dayToPlay.getWeek();
 
-    let dayToAdd = new daysClass(dayNumber, classToDay, weekNumber, 'no se');
+    let dayToAdd = new daysClass( dayNumber, classToDay, weekNumber );
 
-    listofDays.set( keyDate, dayToAdd );
-
-    console.log(listofDays);
-    //console.log(dayToPlay + ' ' + classToDay+ ' ' + dayNumber + ' ' + weekNumber);
-
-    //html += '<li class="' + classToDay + '" data-indice="' + i + '">';
-
-    //html += firstDay.toString('dd') + '</li>';
-    // if (i + 1 === manyDays) {
-    //   html += '</ol>';
-    // } else if ((i + 1) % 7 == 0) {
-    //   html += '</ol><ol>';
-    // }
+    daysCalendarList.set( keyDate, dayToAdd );
   }
+  console.log( daysCalendarList );
+  checkSession( daysCalendarList, sessionsList );
 
-  //$('#' + targetHtml).html(html);
 };
 
-function setInitialDateValues() {
+ function calendarInitialValues() {
   Date.today().setTimeToNow(); // devolver today a today de verdad
 
   const manyDays = 21,
         firstDay = Date.sunday(),
         targetHtml = 'cal_container';
 
-  //console.log(firstDay);
-  askForCalendar(baseUrl).then(sessionsResponse => {
-    if(sessionsResponse) {
+  askForCalendar( baseUrl ).then( sessionsResponse => {
+    if( sessionsResponse ) {
       console.log(sessionsResponse.data);
-      let calendarHome = calendar(manyDays, firstDay, targetHtml);
+      let calendarHome = calendar( manyDays, firstDay, targetHtml, sessionsResponse.data );
     } else {
       console.log('error');
     }
@@ -120,5 +63,5 @@ function setInitialDateValues() {
 }
 
 $(function () {
-  setInitialDateValues();
+  calendarInitialValues();
 });
