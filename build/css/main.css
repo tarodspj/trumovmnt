@@ -9,6 +9,7 @@ li {
 }
 .today {
   color: red;
+  background-color: #515151;
   font-weight: bold;
 }
 .afterToday {
@@ -16,4 +17,15 @@ li {
 }
 .beforeToday{
   color: green;
+}
+.noSession {
+  color: #a9a9a9;
+}
+
+.calendarHomeSessionsLine {
+  margin: 4px 0;
+}
+.calendarHomeSessionsLine .session {
+  margin: 0 0 6px 0;
+  display: block;
 }
