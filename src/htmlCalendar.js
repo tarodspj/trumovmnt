@@ -1,16 +1,20 @@
 let listOfSessionsPerDay = function (sessions) {
-  let sessionsPerThisDay = '',
-      baseGoogleMapsButon = 'https://www.google.com/maps/?q=';
       return {
         getList : function() {
+          const startHtmlList = '<ol class="listOfSessionsThatDay">',
+                endHtmlList = '</ol>';
+          let sessionsPerThisDay = '',
+              baseGoogleMapsButon = 'https://www.google.com/maps/?q=';
 
           sessions.forEach( function ( session ) {
             const name = session.name,
                 local_time = session.local_time,
                 link = session.link;
+
             let location = 'to be defined',
                 mapLink = 'to be defined';
 
+                sessionsPerThisDay = sessionsPerThisDay + `<li class="sessionPerToday">`;
                 sessionsPerThisDay = sessionsPerThisDay + `name session: ${name}<br />`;
                 sessionsPerThisDay = sessionsPerThisDay + `time: ${local_time}<br />`;
                 sessionsPerThisDay = sessionsPerThisDay + `link meetup: <a href="${link}" title="event in meetup">enrole in meetup</a><br />`;
@@ -21,8 +25,9 @@ let listOfSessionsPerDay = function (sessions) {
             }
             sessionsPerThisDay = sessionsPerThisDay + `location: ${location} `;
             sessionsPerThisDay = sessionsPerThisDay + `gmap link: ${mapLink}<br />`;
+            sessionsPerThisDay =  sessionsPerThisDay + '</li>';
           });
-          return sessionsPerThisDay;
+          return startHtmlList + sessionsPerThisDay + endHtmlList;
         },
         getClass : function() {
           let classSession = 'noSession';
@@ -52,10 +57,8 @@ export function htmlCalendar( days ) {
     let sessionsListDay = listOfSessionsPerDay(value.sessions);
 
     weeklySessions = weeklySessions + `<li id="sessionsOfDay${key}" class="session">`;
+    
     if( value.sessions.length !== 0 ) {
-
-      // sessionsListDay = listOfSessionsPerDay(value.sessions);
-      //console.log(theList);
       weeklySessions = weeklySessions + sessionsListDay.getList();
     } else {
       weeklySessions = weeklySessions + `<p>today we don't have session on the schedule</p>`;
