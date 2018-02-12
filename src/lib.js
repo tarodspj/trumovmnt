@@ -1,19 +1,25 @@
+import $ from 'jquery';
+require('datejs');
 
 export async function askForCalendar( url ) {
-    let response = await fetch( url ),
-        sessions = await response.ok;
-
-    if ( sessions ) {
-      return response.json();
-    } else {
-      return sessions;
+  let responseToSend = false;
+  //console.log(url);
+  await $.ajax({
+    url: url,
+    dataType: 'jsonp',
+    success: function( data ){
+      //console.log(data.results);
+      responseToSend = data.results;
     }
-
+  });
+  return responseToSend;
 }
 
 export function checkSession( daysCalendarList, sessionsList ) {
   sessionsList.forEach( function ( session ) {
-    let dayWithSession = daysCalendarList.get( session.local_date );
+    let d = new Date( parseInt( session.time, 10 ) );
+    let dayWithSession = daysCalendarList.get( d.toString('yyyy-MM-dd') );
+
     if( dayWithSession !== undefined ) {
       dayWithSession.addSession( session );
     }

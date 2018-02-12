@@ -5,12 +5,12 @@ import $ from 'jquery';
 require('datejs');
 
 //for prod
- // const baseUrl = 'https://api.meetup.com/T-R-U-Movmnt/events?&sign=true&photo-host=public&page=20&fields=id,duration,local_date,local_time,name,venue,short_link&desc=false',
+ const baseUrl = 'https://api.meetup.com/2/events?key=353441564659940603b1b234e1d6c7e&group_urlname=T-R-U-Movmnt&sign=true';
  //       attributes = '';
 
 //for dev
-const baseUrl = './js/json/meetup.json',
-     attributes = '';
+// const baseUrl = './js/json/meetup.json',
+//      attributes = '';
 
 let calendar = function calendar( manyDays, firstDay, targetHtml, sessionsList ) {
   const $targetHtml = $( '#' + targetHtml );
@@ -45,7 +45,7 @@ let calendar = function calendar( manyDays, firstDay, targetHtml, sessionsList )
 
   askForCalendar( baseUrl ).then( sessionsResponse => {
     if( sessionsResponse ) {
-      let calendarHome = calendar( manyDays, firstDay, targetHtml, sessionsResponse.data );
+      let calendarHome = calendar( manyDays, firstDay, targetHtml, sessionsResponse );
     } else {
       console.log('error');
     }

@@ -1,4 +1,4 @@
-let listOfSessionsPerDay = function (sessions) {
+let listOfSessionsPerDay = function ( sessions ) {
       return {
         getList : function() {
           const startHtmlList = '<ol class="listOfSessionsThatDay">',
@@ -18,6 +18,7 @@ let listOfSessionsPerDay = function (sessions) {
                 sessionsPerThisDay = sessionsPerThisDay + `name session: ${name}<br />`;
                 sessionsPerThisDay = sessionsPerThisDay + `time: ${local_time}<br />`;
                 sessionsPerThisDay = sessionsPerThisDay + `link meetup: <a href="${link}" title="event in meetup">enrole in meetup</a><br />`;
+
             if( session.venue ) {
                 location = session.venue.name,
                 mapLink = `<a href="${baseGoogleMapsButon}${session.venue.lat},${session.venue.lon}" title="${location}">${location}</a>`;
@@ -38,7 +39,6 @@ let listOfSessionsPerDay = function (sessions) {
           return classSession;
         }
       }
-
 };
 
 
@@ -57,7 +57,7 @@ export function htmlCalendar( days ) {
     let sessionsListDay = listOfSessionsPerDay(value.sessions);
 
     weeklySessions = weeklySessions + `<li id="sessionsOfDay${key}" class="session">`;
-    
+
     if( value.sessions.length !== 0 ) {
       weeklySessions = weeklySessions + sessionsListDay.getList();
     } else {
