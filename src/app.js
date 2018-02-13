@@ -6,11 +6,11 @@ require('datejs');
 
 //for prod
  const baseUrl = 'https://api.meetup.com/2/events?key=353441564659940603b1b234e1d6c7e&group_urlname=T-R-U-Movmnt&sign=true';
- //       attributes = '';
+  //       attributes = '';
 
 //for dev
-// const baseUrl = './js/json/meetup.json',
-//      attributes = '';
+ //const baseUrl = './js/json/meetup.json';
+ //      attributes = '';
 
 let calendar = function calendar( manyDays, firstDay, targetHtml, sessionsList ) {
   const $targetHtml = $( '#' + targetHtml );

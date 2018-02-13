@@ -1,0 +1,90 @@
+// out: ../../build/css/main.css, sourcemap: true, compress: true, autoprefixer: true
+@import "globals.less";
+@color1:  #b51515;
+@color11: #881310;
+@color01: #f26075;
+@color2:  #020d02;
+
+@color3:  #f8f3f3;
+@color31: #b6adaf;
+
+.cal_container {
+  margin: 10px;
+  font-family: 'Roboto', sans-serif;
+}
+.weekLine {
+  overflow: hidden;
+   li {
+     display: inline-block;
+   }
+}
+.dayCalendar {
+  &:last-child {
+    &:after {
+      display: none;
+    }
+  }
+}
+.dayCalendar {
+  padding: 1.5em 0;
+  width: 11vw;
+  text-align: center;
+  position: relative;
+  background-color: @color1;
+  color: @color3;
+  cursor: pointer;
+  transition: background-color .4s ease;
+
+  &::after {
+    content: '';
+    .absoluteTopRight;
+    .size(1px, 100%);
+    background-color: @color3;
+  }
+
+  &.active {
+    font-weight: 900;
+    background-color: @color11;
+    .activeDay {
+      bottom: -18px;
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.yesSession {
+    &:hover {
+      background-color: @color11;
+    }
+  }
+
+} //dayCalendar
+
+.noSession {
+  background-color: @color01;
+  color: @color31;
+}
+
+.activeDay {
+  .absoluteBottomLeft(0, 0);
+  .size(100%, 10px);
+  display: block;
+  text-align: center;
+  transition: bottom .5s ease .4s;
+  &::before {
+    content: '';
+    .arrowDown(@color11, 8px);
+    opacity: 0;
+    transition: opacity 0s linear .4s;
+  }
+}
+
+.calendarSessionsLine {
+  display: none;
+  margin: 4px 0;
+  .sessions {
+    margin: 0 0 6px 0;
+    display: block;
+  }
+}
