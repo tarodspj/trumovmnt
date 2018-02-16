@@ -1,6 +1,7 @@
 import { askForCalendar, checkSession, checkToday } from './lib';
 import { daysClass } from './classDays';
 import { htmlCalendar } from './htmlCalendar';
+import { listeners } from './listeners';
 import $ from 'jquery';
 require('datejs');
 
@@ -34,6 +35,7 @@ let calendar = function calendar( manyDays, firstDay, targetHtml, sessionsList )
   htmlToDraw = htmlCalendar( daysCalendarList );
   $( '#' + targetHtml ).html( htmlToDraw );
   //now you can add lisenners
+  let listening = listeners();
 };
 
  function calendarInitialValues() {

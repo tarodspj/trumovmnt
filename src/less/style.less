@@ -1,23 +1,65 @@
 // out: ../../build/css/main.css, sourcemap: true, compress: true, autoprefixer: true
 @import "globals.less";
-@color1:  #b51515;
-@color11: #881310;
-@color01: #f26075;
-@color2:  #020d02;
+@color1:    #b51515;
+@color11:   #881310;
+@color01:   #e8d2d8;
+@color001:  #e0abb7; //disabled calendar days font
+@color2:    #020d02;
 
-@color3:  #f8f3f3;
-@color31: #b6adaf;
+@color3:    #f8f3f3;
+@color31:   #b6adaf;
+
+a {
+  text-decoration: none;
+  color: @color2;
+}
+.cta {
+  transition: background-color .4s ease;
+}
+
+.ctaColor1 {
+  background-color: @color1;
+  color: @color3;
+  &:hover {
+    background-color: @color11;
+  }
+}
+.ctaMedium {
+  padding: 12px 12px;
+  font-weight: 900;
+}
 
 .cal_container {
-  margin: 10px;
   font-family: 'Roboto', sans-serif;
+  width: 80%;
+  margin: 10%;
 }
 .weekLine {
   overflow: hidden;
-   li {
-     display: inline-block;
-   }
 }
+.cellCalendar {
+  color: @color3;
+  padding: 1.5em 0;
+  width: 11vw;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  &::after {
+    content: '';
+    .absoluteTopRight;
+    .size(1px, 100%);
+    background-color: @color3;
+  }
+}
+
+.nameDayList {
+  margin-bottom: 6px;
+}
+.nameDay {
+  padding: 1em 0;
+  background-color: @color2;
+}
+
 .dayCalendar {
   &:last-child {
     &:after {
@@ -26,12 +68,9 @@
   }
 }
 .dayCalendar {
-  padding: 1.5em 0;
-  width: 11vw;
-  text-align: center;
-  position: relative;
+
   background-color: @color1;
-  color: @color3;
+  // color: @color3;
   cursor: pointer;
   transition: background-color .4s ease;
 
@@ -49,6 +88,7 @@
       bottom: -18px;
       &::before {
         opacity: 1;
+        transition: opacity 0s linear;
       }
     }
   }
@@ -63,7 +103,7 @@
 
 .noSession {
   background-color: @color01;
-  color: @color31;
+  color: @color001;
 }
 
 .activeDay {
@@ -71,7 +111,7 @@
   .size(100%, 10px);
   display: block;
   text-align: center;
-  transition: bottom .5s ease .4s;
+  transition: bottom .5s ease .2s; //this maybe mus change in touch devices
   &::before {
     content: '';
     .arrowDown(@color11, 8px);
@@ -81,10 +121,81 @@
 }
 
 .calendarSessionsLine {
-  display: none;
-  margin: 4px 0;
+  //margin: 4px 0;
   .sessions {
-    margin: 0 0 6px 0;
     display: block;
+    margin: 0;
+    font-size: 18px;
+    line-height: 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .7s ease-out, margin .2s ease .3s;
+    &.active {
+      max-height: 800px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+      transition: max-height .4s ease-out, margin .2s ease;
+    }
   }
+}
+
+.sessionPerToday {
+  display: block;
+  position: relative;
+  .sessionSeparationLine {
+    margin: 0;
+    border: 0;
+    .size(70%, 1px);
+    .absoluteBottomLeft(0, 15%);
+    display: inline-block;
+    background-color: @color31;
+  }
+  &:last-child .sessionSeparationLine {
+    display: none;
+  }
+}
+
+.sessionPerTodayInside {
+  padding: 5% 3%;
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.sessionName {
+  font-size: 18px;
+  margin-bottom: 7px;
+  font-weight: 900;
+}
+.sessionLocationLink {
+  font-size: 16px;
+  padding-right: 20px;
+  display: block;
+
+  .ico {
+    display: inline-block;
+    .size(16px, 16px);
+    background: url('../img/location_ico.svg') no-repeat transparent center right;
+    background-size: auto 100%;
+    opacity: .8;
+    transition: opacity .4s ease;
+  }
+  &:hover {
+    .ico {
+      opacity: 1;
+    }
+  }
+}
+
+.sessionTime {
+  font-size: 14px;
+  text-transform: lowercase;
+  font-weight: 500;
+}
+.sessionCta {
+  float: right;
+  padding: 12px 0;
+  font-weight: 500;
+  width: 40%;
+  text-align: center;
 }
