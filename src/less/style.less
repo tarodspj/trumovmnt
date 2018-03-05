@@ -1,5 +1,6 @@
-// out: ../../build/css/main.css, sourcemap: true, compress: true, autoprefixer: true
+//out: ../css/main.css, sourcemap: true, compress: true, autoprefixer: true
 @import "globals.less";
+
 @color1:    #b51515;
 @color11:   #881310;
 @color01:   #e8d2d8;
@@ -88,11 +89,10 @@ a {
       bottom: -18px;
       &::before {
         opacity: 1;
-        transition: opacity 0s linear;
+        transition: opacity 0s linear .4s;
       }
     }
   }
-
   &.yesSession {
     &:hover {
       background-color: @color11;
@@ -129,7 +129,7 @@ a {
     line-height: 24px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height .7s ease-out, margin .2s ease .3s;
+    transition: max-height .8s ease-out, margin .2s ease .3s;
     &.active {
       max-height: 800px;
       margin-top: 6px;

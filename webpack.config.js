@@ -1,26 +1,29 @@
-const path = require('path');
-
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 module.exports = {
-  entry: {
-    app: [
-      'babel-polyfill',
-      './src/app.js'
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader",
+            options: { minimize: true }
+          }
+        ]
+      }
     ]
   },
-  devtool: 'source-map',
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'app.bundle.js'
-  },
-  module: {
-    loaders: [{
-      test: /\.js?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      query: {
-        presets: ['env', 'stage-0'],
-        plugins: ["transform-async-to-generator"]
-      }
-    }]
-  }
-}
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./src/index.html",
+      filename: "./index.html"
+    })
+  ]
+};
